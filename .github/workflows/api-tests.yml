@@ -1,0 +1,39 @@
+name: 🧪 API & E2E Test Suite
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  schedule:
+    - cron: '0 8 * * 1-5'  # Lunes a viernes 8am
+
+jobs:
+  api-tests:
+    name: 🔌 API Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+
+      - name: 🔌 Run API Tests
+        run: npm run test:api
+
+      - name: 🌐 Run E2E Tests
+        run: npm run test:e2e
+
+      - name: 📊 Upload HTML Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-reports
+          path: reports/
+          retention-days: 30

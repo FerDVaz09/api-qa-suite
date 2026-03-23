@@ -1,0 +1,26 @@
+{
+  "name": "api-qa-suite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:api": "playwright test --project=\"API Tests\"",
+    "test:e2e": "playwright test --project=\"E2E Tests\"",
+    "test:newman": "newman run collections/saucedemo-api.json -r htmlextra --reporter-htmlextra-export reports/newman-report.html",
+    "report": "playwright show-report reports/playwright-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.5.0",
+    "dotenv": "^17.3.1",
+    "newman": "^6.2.2",
+    "newman-reporter-htmlextra": "^1.23.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.2"
+  }
+}
