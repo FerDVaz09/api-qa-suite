@@ -7,6 +7,14 @@ const BASE_URL = 'https://fakestoreapi.com';
 test.describe('🛒 Products API', () => {
   let apiClient: ApiClient;
 
+  test.beforeAll(async ({ request }) => {
+    const response = await request.get(`${BASE_URL}/products`).catch(() => null);
+    test.skip(
+      !response || response.status() === 403,
+      'fakestoreapi.com is not reachable from this environment (403). Run tests locally against the real API.'
+    );
+  });
+
   test.beforeEach(async ({ request }) => {
     apiClient = new ApiClient(request, BASE_URL);
   });
